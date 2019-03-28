@@ -44,13 +44,25 @@ Route::group(['middleware' => ['authaw']], function () {
 	Route::any('/ajax-buscar-paciente-essalud', 'PacienteController@actionBuscarPacienteEssalud');
 	
 
-
  	Route::any('/gestion-de-proveedores/{idopcion}', 'ProveedorController@actionListarProveedores');
  	Route::any('/agregar-proveedores/{idopcion}', 'ProveedorController@actionAgregarProveedores');
  	Route::any('/modificar-proveedores/{idopcion}/{codProveedor}', 'ProveedorController@actionModificarProveedores');
 	Route::any('/ajax-buscar-proveedor', 'ProveedorController@actionBuscarProveedor');
 
 
+ 	Route::any('/gestion-de-consulta/{idOpcion}', 'ConsultaController@actionListarConsulta');
+ 	Route::any('/agregar-consulta/{idOpcion}', 'ConsultaController@actionAgregarConsulta');
+ 	/*Route::any('/modificar-consulta/{idOpcion}/{codConsulta}', 'ConsultaController@actionModificarConsulta');*/
+	Route::any('/ajax-buscar-paciente', 'GeneralAjaxController@actionbuscarpacienteajax');
+	Route::any('/ajax-buscar-paciente-modal', 'GeneralAjaxController@actionbuscarpacientemodalajax');
+	Route::any('/ajax-select-centro-convenio', 'GeneralAjaxController@actioncentroconvenioajax');
+	Route::any('/ajax-select-examen', 'GeneralAjaxController@actionexamenajax');
+	Route::any('/ajax-buscar-examen', 'GeneralAjaxController@actionbuscarexamenajax');
+	Route::any('/ajax-buscar-medico-modal', 'GeneralAjaxController@actionbuscarmedicomodalajax');	
+ 	Route::any('/ajax-select-comprobanteserie', 'GeneralAjaxController@actioncomprobanteserieajax');
+ 	Route::any('/ajax-buscar-documento', 'GeneralAjaxController@actionAjaxDocumento');
+
+ 	
 
 	Route::any('/ajax-select-provincia', 'GeneralAjaxController@actionProvinciaAjax');
 	Route::any('/ajax-select-distrito', 'GeneralAjaxController@actionDistritoAjax');

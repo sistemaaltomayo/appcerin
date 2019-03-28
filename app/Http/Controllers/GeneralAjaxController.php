@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Crypt;
-use App\Empresa,App\Local,App\Trabajador,App\Area,App\Horarioempresa,App\Horario,App\Cargoempresa;
+use App\Empresa,App\Local,App\Trabajador,App\Area,App\Horarioempresa,App\Horario,App\Cargoempresa,App\CentroConvenio;
+use App\Examen,App\Comprobante,App\Proveedor;
+use App\Persona;
 use View;
 use Session;
 use Hashids;
@@ -15,6 +17,210 @@ use Hashids;
 
 class GeneralAjaxController extends Controller
 {
+
+
+	public function actionAjaxDocumento(Request $request)
+	{
+		$tipodocumento   	= 	$request['tipodocumento'];
+		$numerodocumento   	= 	$request['numerodocumento'];		
+
+		if($tipodocumento=='1'){
+
+			$comprobante 		= Persona::where('dni','=',$numerodocumento)->first();
+			return View::make('general/ajax/comprobantedniajax',
+			 				 [
+			 				 	'comprobante' => $comprobante
+			 				 ]);
+
+		}else{
+
+			$comprobante 		= Proveedor::where('ruc','=',$numerodocumento)->first();
+			return View::make('general/ajax/comprobanterucajax',
+			 				 [
+			 				 	'comprobante' => $comprobante
+			 				 ]);
+		}
+
+	}
+
+
+
+	public function actioncomprobanteserieajax(Request $request)
+	{
+
+		$comprobante   	= 	$request['comprobante'];
+		$lcomprobante 	= 	Comprobante::where('cod_Comprobante','=',$comprobante)->first();
+
+
+		return View::make('general/ajax/nrocomprobante',
+		 				 [
+		 				 	'comprobante' => $lcomprobante
+		 				 ]);
+
+	}	
+
+
+	public function actionbuscarexamenajax(Request $request)
+	{
+
+		$codexamen   = 	$request['codexamen'];
+
+		$examen = Examen::where('Examen.cod_Examen','=',$codexamen)
+		->first();
+		
+	    if(count($examen)>0){
+		   	$examen = $examen->toJson();
+		    print_r($examen);
+	    }else{
+	    	print_r("{}");
+	    }
+	}	
+
+
+	public function actionexamenajax(Request $request)
+	{
+
+ 
+		$codtipoexamen   = 	$request['codtipoexamen'];
+
+		$listaexamen = Examen::where('Examen.cod_TipoExamen','=',$codtipoexamen) 
+		->pluck('nombre','cod_Examen')->toArray();
+	 
+		$comboexamen  = array(0 => "Seleccione Examen") + $listaexamen;
+	 	 
+		 return View::make('general/ajax/examenajax',
+		 				 [
+		 				 'comboexamen' => $comboexamen
+		 				 ]);
+
+	}	
+
+	public function actioncentroconvenioajax(Request $request)
+	{
+
+		$planatencion   = 	$request['planatencion'];
+		$examen_id   	= 	$request['examen_id'];
+		$precio         =   '';
+
+		/**** precio del examen *****/
+		$examen = Examen::where('Examen.cod_Examen','=',$examen_id)
+		->first();
+
+		if(count($examen)>0){
+			$precio         =   $examen->precio;			
+		}
+
+		if($planatencion == 'CONVENIO'){
+			$CentroConvenio = CentroConvenio::where('tipo','=','C')
+							->pluck('razonSocial','cod_CentroConvenio')->toArray();			
+		}else{
+			$CentroConvenio = CentroConvenio::where('tipo','=','L')
+							->pluck('razonSocial','cod_CentroConvenio')->toArray();	
+		}
+
+		$combocentroconvenio  =  $CentroConvenio;
+
+		return View::make('general/ajax/centroconvenioajax',
+						 [
+						 	'combocentroconvenio' => $combocentroconvenio,
+						 	'precio' => $precio					 	
+						 ]);
+
+	}
+
+
+	public function actionbuscarmedicomodalajax(Request $request)
+	{
+
+		$dniapellidomedico   = 	$request['dniapellidomedico'];
+		$tipobuscarmedico    = 	$request['tipobuscarmedico'];
+
+		if($tipobuscarmedico == 'A'){
+
+			$listamedicos = Persona::join('Medico', 'Persona.Cod_Persona', '=', 'Medico.Cod_Medico')
+			->where('Persona.apPaterno','like','%'.$dniapellidomedico.'%')
+			->orWhere('Persona.apMaterno','like','%'.$dniapellidomedico.'%')
+			->orderBy('Persona.apPaterno', 'asc')
+			->orderBy('Persona.apMaterno', 'asc')
+		    ->get();
+
+		}else{
+
+			$listamedicos = Persona::join('Medico', 'Persona.Cod_Persona', '=', 'Medico.Cod_Medico')
+			->where('Persona.dni','like','%'.$dniapellidomedico.'%')
+			->orderBy('Persona.apPaterno', 'asc')
+			->orderBy('Persona.apMaterno', 'asc')
+		    ->get();
+
+		}
+
+
+		return View::make('general/ajax/listamedico',
+						 [
+						 	'listamedicos' => $listamedicos
+						 ]);
+
+
+
+	}
+
+
+	public function actionbuscarpacientemodalajax(Request $request)
+	{
+
+		$dniapellido   = 	$request['dniapellido'];
+		$tipobuscar    = 	$request['tipobuscar'];
+
+		if($tipobuscar == 'A'){
+
+			$listapacientes = Persona::join('Paciente', 'Persona.Cod_Persona', '=', 'Paciente.Cod_Paciente')
+			->where('Persona.apPaterno','like','%'.$dniapellido.'%')
+			->orWhere('Persona.apMaterno','like','%'.$dniapellido.'%')
+			->orderBy('Persona.apPaterno', 'asc')
+			->orderBy('Persona.apMaterno', 'asc')
+		    ->get();
+
+		}else{
+
+
+			$listapacientes = Persona::join('Paciente', 'Persona.Cod_Persona', '=', 'Paciente.Cod_Paciente')
+			->where('Persona.dni','like','%'.$dniapellido.'%')
+			->orderBy('Persona.apPaterno', 'asc')
+			->orderBy('Persona.apMaterno', 'asc')
+		    ->get();
+
+
+		}
+
+		return View::make('general/ajax/listapaciente',
+						 [
+						 'listapacientes' => $listapacientes
+						 ]);
+
+
+	}
+
+
+	public function actionbuscarpacienteajax(Request $request)
+	{
+
+		$dni   = 	$request['dni'];
+		$listaPacientes = Persona::join('Paciente', 'Persona.Cod_Persona', '=', 'Paciente.Cod_Paciente')
+		->where('Persona.dni','=',$dni)
+		->orderBy('Persona.apPaterno', 'asc')
+		->orderBy('Persona.apMaterno', 'asc')
+	    ->first();
+
+	    if(count($listaPacientes)>0){
+		   	$listaPacientes = $listaPacientes->toJson();
+		    print_r($listaPacientes);
+	    }else{
+	    	print_r("{}");
+	    }
+
+
+
+	}	
 
 
 	public function actionAjaxBuscarSunat()

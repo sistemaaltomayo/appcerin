@@ -54,7 +54,8 @@
     <script src="{{ asset('public/lib/bootstrap/dist/js/bootstrap.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('public/lib/scroll/js/jquery.mousewheel.js') }}" type="text/javascript"></script>
     <script src="{{ asset('public/lib/scroll/js/jquery-scrollpanel-0.7.0.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('public/lib/scroll/js/scroll.js') }}" type="text/javascript"></script>   
+    <script src="{{ asset('public/lib/scroll/js/scroll.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('public/js/jquery.numeric.js') }}" type="text/javascript"></script>    
     <script src="{{ asset('public/js/general/general.js') }}" type="text/javascript"></script>
 
     @yield('script')

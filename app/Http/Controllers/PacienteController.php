@@ -180,6 +180,10 @@ class PacienteController extends Controller
 					return Redirect::to('/gestion-pacientes/'.$idOpcion)->with('bienhecho', 'El paciente ya existe');	
 				}
 
+				$tpaciente            			=  new Paciente;
+				$tpaciente->Cod_Paciente 	 	=  $tpersona->cod_Persona;
+				$tpaciente->save();
+
      			//PARA REGISTRAR CLIENTE 
 				$paciente   = Cliente::where('Cod_Cliente','=',$codper)->first();
 

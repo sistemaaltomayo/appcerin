@@ -17,11 +17,11 @@
         <div class="panel panel-default panel-border-color panel-border-color-primary">
           <div class="panel-heading panel-heading-divider">Paciente<span class="panel-subtitle">Crear un nuevo Paciente</span></div>
           <div class="panel-body">
-            <form method="POST" action="{{ url('/agregar-pacientes/'.$idopcion) }}" style="border-radius: 0px;" class="formpaciente form-horizontal group-border-dashed">
+            <form method="POST" action="{{ url('/agregar-pacientes/'.$idopcion) }}" style="border-radius: 0px;" class="form-horizontal group-border-dashed">
                   {{ csrf_field() }}
-
+                  <div class='formpaciente'>
                   @include('paciente.form.paciente')
-
+                  </div>
             </form>
           </div>
         </div>
