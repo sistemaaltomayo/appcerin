@@ -532,8 +532,8 @@
 </div>
 
 
-<input type="text" value="" name="codpaciente" id="codpaciente">
-<input type="text" value="2" name="codmedico" id="codmedico">
+<input type="hidden" value="" name="codpaciente" id="codpaciente">
+<input type="hidden" value="2" name="codmedico" id="codmedico">
 <input type="hidden" value="" name="xml" id="xml">
 
 @include('consulta.modal.paciente')

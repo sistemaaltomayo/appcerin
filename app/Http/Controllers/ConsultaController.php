@@ -93,9 +93,9 @@ class ConsultaController extends Controller
 				$xml  	 			= $request['xml'];
 
 				$tconsulta            			=  new Consulta;
-				$tconsulta->fecha_Examen 		=  $fechaexamen;
-				$tconsulta->fecha_Informe 		=  $fechainforme;
-				$tconsulta->hora_Examen 		=  $this->fechaActual;
+				$tconsulta->fecha_Examen 		=  date_format(date_create($fechaexamen),'Ymd');
+				$tconsulta->fecha_Informe 		=  date_format(date_create($fechainforme),'Ymd');
+				$tconsulta->hora_Examen 		=  date_format(date_create($this->fechaActual),'Ymd H:i:s');
 				$tconsulta->numDoc 				=  $numdoc;
 				$tconsulta->costo 				=  $total;
 				$tconsulta->acuenta				=  $acuenta;
@@ -114,7 +114,7 @@ class ConsultaController extends Controller
 				$tconsulta->RAZONSOCIALFE		=  $razonsocial;
 				$tconsulta->SUBTOTAL			=  $subtotal;
 				$tconsulta->UsuarioReg			=  Session::get('usuario')->nombre;
-				$tconsulta->fechaUserReg		=  $this->fechaActual;				
+				$tconsulta->fechaUserReg		=  date_format(date_create($this->fechaActual),'Ymd H:i:s');;				
 				$tconsulta->IGV					=  $igv;
 				$tconsulta->CORREOFE		    =  $email;
 				$tconsulta->ESTADOFE		    =  '';
