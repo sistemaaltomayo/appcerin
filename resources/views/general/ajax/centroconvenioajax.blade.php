@@ -10,7 +10,6 @@
   </div>
   <script type="text/javascript">
     $(document).ready(function(){
-
       $('#precio').val(reclacularprecio("{!!$precio!!}"));
     });
   </script> 

@@ -4,7 +4,50 @@ namespace App\Biblioteca;
 use DB,Hashids,Session,Redirect,table;
 use App\RolOpcion,App\Local,App\Empresa,App\Horariotrabajador,App\Semana,App\Permisouserempresa,App\Trabajador,App\Asistenciatrabajador;
 use App\Descansovacacion,App\Horario,App\Permisousersede;
+use App\Comprobante,App\Consulta;
 class Funcion{
+
+
+	function numerodocumento($numerodocumento){
+
+     	$comprobante        =   Comprobante::where('cod_Comprobante','=',$numerodocumento)
+			                    ->first(); 
+
+		$numcomp 			= 	str_pad($comprobante->numero + 1, 6, "0", STR_PAD_LEFT); 
+
+ 		$numcomp 			= 	$comprobante->serie.'-'.$numcomp;
+
+        return $numcomp;
+	}
+
+
+	function numeroticket(){
+
+
+  		$id="";
+		$id = DB::table('Consulta')
+        ->select(DB::raw('max(CAST(cod_Consulta AS int)) as cod_Consulta'))
+        ->get();
+        $idsuma = (int)$id[0]->cod_Consulta + 1;
+	  	$idopcioncompleta = str_pad($idsuma, 7, "0", STR_PAD_LEFT); 
+
+		$idopcioncompleta = $idopcioncompleta;
+
+  		return $idopcioncompleta;	
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	function reportemintra($trabajador_id,$arraysemanas){
 

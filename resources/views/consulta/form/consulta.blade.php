@@ -31,7 +31,7 @@
 
             <input  type="text"
                     id="dniguardar" name='dniguardar' value="" placeholder="DNI"
-                    disabled="disabled"
+                    readonly="readonly"
                     autocomplete="off" class="form-control input-sm" data-aw="1"/>
 
           </div>
@@ -50,7 +50,7 @@
 
             <input  type="text"
                     id="edad" name='edad' value="@if(isset($persona)){{old('edad' ,$persona->edad)}}@else{{old('edad')}}@endif" placeholder="Apellido Paterno"
-                    disabled="disabled"
+                    readonly="readonly"
                     autocomplete="off" class="form-control input-sm" data-aw="2"/>
 
           </div>
@@ -65,7 +65,7 @@
 
             <input  type="text"
                     id="nombrepaciente" name='nombrepaciente' value="@if(isset($persona)){{old('nombrepaciente' ,$persona->nombrepaciente)}}@else{{old('nombrepaciente')}}@endif" placeholder="Nombres"
-                    disabled="disabled"
+                    readonly="readonly"
                     autocomplete="off" class="form-control input-sm" data-aw="1"/>
 
           </div>
@@ -348,7 +348,7 @@
             <div class="col-sm-12">
               <input  type="text"
                       id="razonsocial" name='razonsocial' value="{{old('razonsocial')}}" placeholder="Razón Social"
-                      disabled="disabled"
+                      readonly="readonly"
                       autocomplete="off" class="form-control input-sm" data-aw="2"/>
             </div>
           </div>
@@ -360,7 +360,7 @@
             <div class="col-sm-12">
               <input  type="text"
                       id="direccion" name='direccion' value="{{old('direccion')}}" placeholder="Dirección"
-                      disabled="disabled"
+                      readonly="readonly"
                       autocomplete="off" class="form-control input-sm" data-aw="2"/>
             </div>
           </div>
@@ -372,7 +372,7 @@
             <div class="col-sm-12">
               <input  type="text"
                       id="email" name='email' value="{{old('email')}}" placeholder="Email"
-                      disabled="disabled"
+                      readonly="readonly"
                       autocomplete="off" class="form-control input-sm" data-aw="2"/>
             </div>
           </div>
@@ -384,7 +384,7 @@
             <div class="col-sm-12">
               <input  type="text"
                       id="numerodocumentoguardar" name='numerodocumentoguardar' value="{{old('numerodocumentoguardar')}}" placeholder="Numero Documento"
-                      disabled="disabled"
+                      readonly="readonly"
                       autocomplete="off" class="form-control input-sm" data-aw="2"/>
             </div>
           </div>
@@ -425,7 +425,7 @@
 
               <input  type="text"
                       id="montototal" name='montototal' value="" placeholder="0.00"
-                      disabled="disabled"
+                      readonly="readonly"
                       autocomplete="off" class="decimal form-control input-sm" data-aw="2"/>
 
             </div>
@@ -473,7 +473,7 @@
 
               <input  type="text"
                       id="nrodocumento" name='nrodocumento' value="" placeholder="Nro. Documento"
-                      disabled="disabled"
+                      readonly="readonly"
                       autocomplete="off" class="form-control input-sm" data-aw="2"/>
 
             </div>
@@ -489,7 +489,7 @@
 
               <input  type="text"
                       id="saldo" name='saldo' value="" placeholder="0.00"
-                      disabled="disabled"
+                      readonly="readonly"
                       autocomplete="off" class="decimal form-control input-sm" data-aw="2"/>
 
             </div>
@@ -503,7 +503,7 @@
           <div class="col-sm-12">
             <input  type="text"
                     id="subtotal" name='subtotal' value="{{old('subtotal')}}" placeholder="Sub total"
-                    disabled="disabled"
+                    readonly="readonly"
                     autocomplete="off" class="form-control input-sm" data-aw="2"/>
           </div>
         </div>
@@ -514,7 +514,7 @@
           <div class="col-sm-12">
             <input  type="text"
                     id="igv" name='igv' value="{{old('igv')}}" placeholder="Igv"
-                    disabled="disabled"
+                    readonly="readonly"
                     autocomplete="off" class="form-control input-sm" data-aw="2"/>
           </div>
         </div>
@@ -532,8 +532,8 @@
 </div>
 
 
-<input type="hidden" value="" name="codpaciente" id="codpaciente">
-<input type="hidden" value="" name="codmedico" id="codmedico">
+<input type="text" value="" name="codpaciente" id="codpaciente">
+<input type="text" value="2" name="codmedico" id="codmedico">
 <input type="hidden" value="" name="xml" id="xml">
 
 @include('consulta.modal.paciente')

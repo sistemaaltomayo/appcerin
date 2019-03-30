@@ -9,7 +9,7 @@
   <tbody>
       @foreach($listamedicos as $item)
         <tr>  
-          <td class='bcodm' style = 'display:none;'>{{$item->cod_Medico}}</td>          
+          <td class='bcodm' style = 'display:none;'>{{$item->Cod_Medico}}</td>          
           <td class='bdnim'>{{$item->dni}}</td>
           <td class='bnombrem'>{{$item->nombre}} {{$item->apPaterno}} {{$item->apMaterno}}</td>      
         </tr>

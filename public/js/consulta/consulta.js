@@ -2,6 +2,10 @@ $(document).ready(function(){
 
     var carpeta         =   $("#carpeta").val();
 
+
+
+
+
     $(".ajaxpersonal").on('click','#guardardconsulta', function() {
 
         var dni                 = $('#dniguardar').val().trim();
@@ -38,9 +42,9 @@ $(document).ready(function(){
         if(acuenta == ''){alerterrorajax("El campo A Cuenta es obligatorio");return false;}
         if(tipopago == 'V'){if(comprobante_id != '1' && comprobante_id != '3'){alerterrorajax("El campo Visa seleccionado solo es para Factura y Boleta");return false;}}
 
-        alertajax('Regstrado (Perro me envias si hay mas valdaciones antes de guardar)');
+        abrircargando();
 
-        return false;
+        return true;
 
     });
 
@@ -259,6 +263,8 @@ $(document).ready(function(){
                         },
             success: function (data) {
                 $(".ajaxexamen").html(data);
+                $('#precio').val('');
+
             },
             error: function (data) {
                 cerrarcargando();
@@ -316,6 +322,7 @@ $(document).ready(function(){
         }else{
             if(tratante == 'C'){
                 $('#nombretratante').val('CERIN');
+                $('#codmedico').val('2');
             }
         }
     });
@@ -383,7 +390,7 @@ $(document).ready(function(){
                 if(count>0){
 
                     var nombrecompleto   = obj.apPaterno +' '+obj.apMaterno +' '+obj.nombre ;
-                    $('#codpaciente').val(obj.codPaciente);
+                    $('#codpaciente').val(obj.Cod_Paciente);
                     $('#nombrepaciente').val(nombrecompleto);
                     $('#edad').val(calcularEdad(obj.fechaNac));
                     $('#dniguardar').val(dni);
@@ -506,7 +513,7 @@ $(document).ready(function(){
 
     });
 
-
+    $('#planatencion_id').val('1').change();
 
 });
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Crypt;
 use View;
 use App\Paciente,App\Persona,App\Cliente,App\Examen,App\Comprobante,App\ReniecTipoDocumentos;
-use App\Departamento,App\Distrito,App\Provincia,App\PlanAtencion,App\TipoExamen,App\CentroConvenio;
+use App\Departamento,App\Distrito,App\Provincia,App\PlanAtencion,App\TipoExamen,App\CentroConvenio,App\Consulta,App\DetalleConsulta;
 use ZipArchive;
 use Session;
 use Hashids;
@@ -59,63 +59,68 @@ class ConsultaController extends Controller
 
 
 
-				$fechaexamen 		= Input::get('fechaexamen');
-				$fechainforme 		= Input::get('fechainforme');
-				$horaexamen 		= Input::get('horaexamen');
-				$tipopago  			= Input::get('tipopago');
+				$fechaexamen 		= $request['fechaconsulta'];
+				$fechainforme 		= $request['fechainforme'];
+				$horaexamen 		= $request['horaexamen'];
+				$tipopago  			= $request['tipopago'];
 
-				$acuenta 			= Input::get('acuenta');
-				$saldo 				= Input::get('saldo');
-				$total 				= Input::get('montototal');
-				$edad 				= Input::get('edad');
+				$acuenta 			= $request['acuenta'];
+				$saldo 				= $request['saldo'];
+				$total 				= $request['montototal'];
+				$edad 				= $request['edad'];
 
-				$medicoorden		= Input::get('medicoorden');
-				$tratante			= Input::get('tratante');
-				$codPaciente		= Input::get('codPaciente');
-				$codMedico			= Input::get('codMedico');
-
-				$tipodocumento		= Input::get('tipodocumento');
-				$numerodocumento	= Input::get('numerodocumento');
-				$razonsocial		= Input::get('razonsocial');
-				$subtotal			= Input::get('subtotal');	
-				$igv				= Input::get('igv');		
-				$email				= Input::get('email');	
-
-				$codLocal			= Session::get('listalocal')->codLocal;
-
-				$xml  	 			= Input::get('xml');
+				$medicoorden		= $request['medicoorden'];
+				$tratante			= $request['tratante'];
+				$codPaciente		= $request['codpaciente'];
+				$codMedico			= $request['codmedico'];
+				$nombremedico		= $request['nombremedico'];
 
 
+				$tipodocumento		= $request['tipodocumento_id'];
+				$comprobante_id		= $request['comprobante_id'];
+				$informado_id		= $request['informado_id'];
 
-				$idcreate = new GeneralClass();
-				$idconsulta = $idcreate->getCreateId('Consulta','codConsulta');
+				$numerodocumento	= $request['numerodocumento'];
+				$razonsocial		= $request['razonsocial'];
+				$subtotal			= $request['subtotal'];	
+				$igv				= $request['igv'];		
+				$email				= $request['email'];	
+
+				$numdoc 			= $this->funciones->numerodocumento($comprobante_id);
+				$nrotk 				= $this->funciones->numeroticket();
+
+
+				$xml  	 			= $request['xml'];
 
 				$tconsulta            			=  new Consulta;
-
-				$tconsulta->codConsulta 		=  $idconsulta;
-				$tconsulta->fechaexamen 		=  $fechaexamen;
-				$tconsulta->fechainforme 		=  $fechainforme;
-				$tconsulta->horaexamen 			=  $horaexamen;
-				$tconsulta->tipopago			=  $tipopago;
-				$tconsulta->acuenta				=  $total;
-				$tconsulta->saldo				=  0;
-				$tconsulta->total				=  $total;
-				$tconsulta->medicoorden			=  $medicoorden;
-				$tconsulta->tratante			=  $tratante;
-				$tconsulta->codPaciente			=  $codPaciente;
-				$tconsulta->codMedico			=  $codMedico;
-				$tconsulta->codLocal			=  $codLocal;
-				$tconsulta->edad			=  $edad;
-
-				$tconsulta->tipodocfe			=  $tipodocumento;
-				$tconsulta->nrodocfe			=  $numerodocumento;
-				$tconsulta->razonsocialfe		=  $razonsocial;
-				$tconsulta->subtotal			=  $subtotal;
-				$tconsulta->igv					=  $igv;
-				$tconsulta->correofe		    =  $email;
-				$tconsulta->estadofe		    =  '';
+				$tconsulta->fecha_Examen 		=  $fechaexamen;
+				$tconsulta->fecha_Informe 		=  $fechainforme;
+				$tconsulta->hora_Examen 		=  $this->fechaActual;
+				$tconsulta->numDoc 				=  $numdoc;
+				$tconsulta->costo 				=  $total;
+				$tconsulta->acuenta				=  $acuenta;
+				$tconsulta->saldo				=  $saldo;
+				$tconsulta->total_Consulta		=  $total;
 				$tconsulta->estado				=  'P';
+				$tconsulta->nroTicket			=  $nrotk;				
+				$tconsulta->tipopago			=  $tipopago;
+				$tconsulta->Cod_Paciente		=  $codPaciente;
+				$tconsulta->cod_Comprobante		=  $comprobante_id;
+				$tconsulta->cod_Persona			=  $codMedico;
+				$tconsulta->MedicoOrden			=  $nombremedico;
+
+				$tconsulta->TIPODOCFE			=  $tipodocumento;
+				$tconsulta->NRODOCFE			=  $numerodocumento;
+				$tconsulta->RAZONSOCIALFE		=  $razonsocial;
+				$tconsulta->SUBTOTAL			=  $subtotal;
+				$tconsulta->UsuarioReg			=  Session::get('usuario')->nombre;
+				$tconsulta->fechaUserReg		=  $this->fechaActual;				
+				$tconsulta->IGV					=  $igv;
+				$tconsulta->CORREOFE		    =  $email;
+				$tconsulta->ESTADOFE		    =  '';
+				$tconsulta->cod_MedInforma			=  $informado_id;
 				$tconsulta->save();
+
 
 
 
@@ -132,34 +137,27 @@ class ConsultaController extends Controller
 					$xexamen 			= $detalle[3];
 					$xsubtotal 			= $detalle[0];
 
-
-					$iddetalle = $idcreate->getCreateId('DetalleConsulta','codDetalleConsulta');
-
 					$tdetalle            	 		=	new DetalleConsulta;
-					$tdetalle->codDetalleConsulta 	=  $iddetalle;
+					$tdetalle->cod_Consulta 	 	=  $tconsulta->cod_Consulta;
+					$tdetalle->cod_Examen 	 		=  $xexamen;
+					$tdetalle->cod_PlanAtencion 	=  $xplanatencion;
 					$tdetalle->cantidad 	     	=  1;
-					$tdetalle->subtotal 	 		=  $xsubtotal;
+					$tdetalle->monto_total 	 		=  $xsubtotal;
 					$tdetalle->informe 	 			=  '';
 					$tdetalle->estado 	 			=  'P';
-					$tdetalle->codConsulta 	 		=  $idconsulta;
-					$tdetalle->codExamen 	 		=  $xexamen;			
-					$tdetalle->codPlanAtencion 	 	=  $xplanatencion;
-					$tdetalle->codCentroConvenio	=  $xcentroconvenio;	
+					$tdetalle->cod_CentroConvenio	=  $xcentroconvenio;	
 					$tdetalle->save();
-
-
-
 
 				}	
 
-				//DB::commit();
-				return Redirect::to('/gestion-consultas/'.$idOpcion)->with('alertaMensajeGlobal', 'Consulta  Registrado con Exito');	
+				DB::commit();
+				return Redirect::to('/gestion-de-consulta/'.$idopcion)->with('bienhecho', 'Consulta  Registrado con Exito');	
 				
 			}
 			catch(Exception $ex)
 			{
 				DB::rollback();
-				return Redirect::to('/gestion-consultas/'.$idOpcion)->with('alertaMensajeGlobalE', 'Error inesperado. Por favor contacte con el administrador del sistema');	
+				return Redirect::to('/gestion-de-consulta/'.$idOpcion)->with('bienhecho', 'Error inesperado. Por favor contacte con el administrador del sistema');	
 				
 			}
 

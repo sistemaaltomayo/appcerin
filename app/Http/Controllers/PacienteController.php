@@ -64,14 +64,15 @@ class PacienteController extends Controller
 		}
 
 		$combosexo  				 	= array($sexo => $nombresexo,-1 => "Seleccione Sexo", 0 => "Femenino" , 1 => "Masculino");
-
+		$comboedad  				 	= array('AÑOS' => "AÑOS", 'MESES' => "MESES" , 'DIAS' => "DIAS");
 		return View::make('paciente/ajax/paciente',
 						 [
 							 'persona' => $persona,
 							 'combodepartamento' => $combodepartamento,
 							 'comboprovincia' => $comboprovincia,
 							 'combodistrito' => $combodistrito,
-							 'combosexo' => $combosexo,							 
+							 'combosexo' => $combosexo,
+							 'comboedad' => $comboedad							 							 
 						 ]);
 
 	}	
@@ -127,7 +128,7 @@ class PacienteController extends Controller
 				$nombre   			= $request['nombre'];								
 				$apellidopaterno   	= $request['apellidopaterno'];
 				$apellidomaterno 	= $request['apellidomaterno'];
-				$fechanacimiento 	= $request['fechanacimiento'];
+				$fechanacimiento 	= date_format(date_create($request['fechanacimiento']),'Ymd');
 				$sexo_id   			= $request['sexo_id'];
 				$autogenerado 		= $request['autogenerado'];
 				$direccion   		= $request['direccion'];
@@ -223,6 +224,7 @@ class PacienteController extends Controller
 			$comboprovincia				 = array('' => "Seleccione Provincia");
 			$combodistrito				 = array('' => "Seleccione Distrito");
 			$combosexo  				 = array(-1 => "Seleccione Sexo", 0 => "Femenino" , 1 => "Masculino");
+			$comboedad  				 = array('AÑOS' => "AÑOS", 'MESES' => "MESES" , 'DIAS' => "DIAS");
 
 			return View::make('paciente/agregarpaciente',
 						[
@@ -230,6 +232,7 @@ class PacienteController extends Controller
 							 'comboprovincia' => $comboprovincia,
 							 'combodistrito' => $combodistrito,
 							 'combosexo' => $combosexo,
+							 'comboedad' => $comboedad,							 
 							 'idopcion' => $idopcion
 						]);
 
@@ -263,7 +266,7 @@ class PacienteController extends Controller
 				$nombre   			= $request['nombre'];								
 				$apellidopaterno   	= $request['apellidopaterno'];
 				$apellidomaterno 	= $request['apellidomaterno'];
-				$fechanacimiento 	= $request['fechanacimiento'];
+				$fechanacimiento 	= date_format(date_create($request['fechanacimiento']),'Ymd');
 				$sexo_id   			= $request['sexo_id'];
 				$autogenerado 		= $request['autogenerado'];
 				$direccion   		= $request['direccion'];

@@ -5,7 +5,7 @@
     <input  type="text"
             id="dni" name='dni' value="@if(isset($persona)){{old('dni' ,$persona['dni'])}}@else{{old('dni')}}@endif" placeholder="DNI"
             data-parsley-minlength="8" data-parsley-maxlength="8" data-parsley-type="number"
-            autocomplete="off" class="form-control input-sm" data-aw="3"/>
+            autocomplete="off" class="solonumero form-control input-sm" data-aw="3" maxlength="8"/>
 
       @include('error.erroresvalidate', [ 'id' => $errors->has('dni')  , 
                                           'error' => $errors->first('dni', ':message') , 
@@ -69,6 +69,21 @@
                 <span class="input-group-addon btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></span>
       </div>
     </div>
+</div>
+
+
+
+<div class="form-group">
+  <label class="col-sm-3 control-label">Edad</label>
+  <div class="col-sm-6">
+
+    <input  type="text"
+            id="edad" name='edad' value="0 AÑOS" placeholder="Edad"
+            required = ""
+            autocomplete="off" class="solonumero form-control input-sm" data-aw="4"/>
+
+
+  </div>
 </div>
 
 <div class="form-group">
@@ -188,3 +203,11 @@
     </p>
   </div>
 </div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    App.formElements();
+    $('#edad').val(calcularEdad("{!!date_format(date_create($persona['fecha_nacimiento']),'Y-m-d')!!}"));
+  });
+</script> 

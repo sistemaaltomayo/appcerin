@@ -52,7 +52,7 @@
                               <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">Acción <span class="icon-dropdown mdi mdi-chevron-down"></span></button>
                               <ul role="menu" class="dropdown-menu pull-right">
                                 <li>
-                                  <a href="{{ url('/modificar-pacientes/'.$idopcion.'/'.$item->cod_Persona) }}">Modificar</a>
+                                  <a href="">Imprimir voucher</a>
                                 </li>
                               </ul>
                             </div>

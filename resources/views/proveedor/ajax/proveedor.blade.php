@@ -12,7 +12,7 @@
                                           'data' => '3'])
 
       <span class="input-group-btn">
-       <button id='buscarpaciente' type="button" style='height: 37px;' class="btn btn-primary "><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Buscar</font></font></button></span>
+       <button id='buscarproveedor' type="button" style='height: 37px;' class="btn btn-primary "><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Buscar</font></font></button></span>
 
 
   </div>
