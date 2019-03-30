@@ -60,6 +60,6 @@
       });
     </script> 
 
-    <script src="{{ asset('public/js/proveedor/proveedor.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('public/js/proveedor/proveedor.js?v='.$version) }}" type="text/javascript"></script>
 
 @stop

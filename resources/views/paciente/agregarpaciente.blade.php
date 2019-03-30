@@ -58,6 +58,6 @@
       });
     </script> 
 
-    <script src="{{ asset('public/js/paciente/paciente.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('public/js/paciente/paciente.js?v='.$version) }}" type="text/javascript"></script>
 
 @stop
